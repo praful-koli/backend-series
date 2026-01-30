@@ -23,4 +23,18 @@ app.post("/notes", async (req, res) => {
   });
 });
 
+
+app.get('/notes' , async(req, res) => {
+    const note = await noteModel.find()
+    if(!note) {
+       return res.status(404).json({
+            message : "data not found"
+        })
+    }
+    res.status(200).json({
+        message : "your Notes",
+        note
+    })
+})
+
 module.exports = app;
