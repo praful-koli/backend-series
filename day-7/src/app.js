@@ -8,7 +8,8 @@ const express = require("express");
 const noteModel = require("./models/notes.model.js");
 const app = express();
 
-app.use(express.json());
+app.use( express.json() );
+
 
 
 app.post("/notes", async (req, res) => {
@@ -35,6 +36,11 @@ app.get('/notes' , async(req, res) => {
         message : "your Notes",
         note
     })
+})
+
+
+app.delete('/notes/:id', (req , res) => {
+  
 })
 
 module.exports = app;
