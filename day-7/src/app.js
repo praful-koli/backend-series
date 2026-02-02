@@ -25,18 +25,27 @@ app.post("/notes", async (req, res) => {
 });
 
 
-app.get('/notes' , async(req, res) => {
-    const note = await noteModel.find()
-    if(!note) {
-       return res.status(404).json({
-            message : "data not found"
-        })
+app.get('/notes', async (req, res) => {
+    try {
+        const notes = await noteModel.find();
+        console.log(typeof notes)
+        if (notes.length === 0) {
+            return res.status(404).json({
+                message: "No notes found"
+            });
+        }
+
+        res.status(200).json({
+            message: "Your Notes",
+            notes
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Server error",
+            error: error.message
+        });
     }
-    res.status(200).json({
-        message : "your Notes",
-        note
-    })
-})
+});
 
 
 app.delete('/notes/:id', (req , res) => {
