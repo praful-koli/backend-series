@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 function App() {
-  const [notes, setNotes] = useState([
-    
-  ]);
+  const [updateNoteid, setUpdateNoteid] = useState(null);
+  const [note, setNote] = useState({});
+  const [notes, setNotes] = useState([]);
 
   function fatchNotes() {
     axios
@@ -16,19 +16,29 @@ function App() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const { title, description } = e.target.elements;
-
-    axios
+    if (updateNoteid) {
+      axios.patch(`http://localhost:3000/api/notes/${updateNoteid}`, {
+        title: note.title,
+        description: note.description,
+      }).then((res) => {
+        console.log(res.data);
+         fatchNotes();
+      })
+      setNote({})
+      setUpdateNoteid(null)
+    }
+    else {
+       axios
       .post("http://localhost:3000/api/notes", {
-        title: title.value,
-        description: description.value,
+        title: note.title,
+        description: note.description,
       })
       .then((res) => {
         console.log(res.data);
         fatchNotes();
       });
-    e.target.elements.title.value = "";
-    e.target.elements.description.value = "";
+      setNote({})
+    }
   }
 
   function handleDeleteNote(noteId) {
@@ -37,12 +47,19 @@ function App() {
       fatchNotes();
     });
   }
-  
-  // function handleUpdateNote(noteId) {
-  //   // axios.patch(`http://localhost:3000/api/notes/${noteId}`,{
-  //   // })
-    
-  // }
+
+  function handleUpdateNote(noteId, noteData) {
+    setNote({
+      title: noteData.title,
+      description: noteData.description,
+    });
+    setUpdateNoteid(noteId);
+  }
+
+  function noteFormData(e) {
+    setNote({ ...note, [e.target.name]: e.target.value });
+  }
+
   useEffect(() => {
     fatchNotes();
   }, []);
@@ -50,8 +67,20 @@ function App() {
   return (
     <>
       <form className="note-create-form" onSubmit={handleSubmit}>
-        <input name="title" type="text" placeholder="Enter title" />
-        <input name="description" type="text" placeholder="Enter decription" />
+        <input
+          onChange={noteFormData}
+          name="title"
+          type="text"
+          placeholder="Enter title"
+          value={note.title || ""}
+        />
+        <input
+          onChange={noteFormData}
+          name="description"
+          type="text"
+          placeholder="Enter decription"
+          value={note.description || ""}
+        />
         <button>Submit</button>
       </form>
 
@@ -61,8 +90,15 @@ function App() {
             <div key={idx} className="note">
               <h1>{note.title}</h1>
               <p>{note.description}</p>
-              <button style={{backgroundColor:"red"}} onClick={() => handleDeleteNote(note._id)}>Delete</button>
-              {/* <button onClick={()=> handleUpdateNote(note._id)}>update</button> */}
+              <button
+                style={{ backgroundColor: "red" }}
+                onClick={() => handleDeleteNote(note._id)}
+              >
+                Delete
+              </button>
+              <button onClick={() => handleUpdateNote(note._id, note)}>
+                update
+              </button>
             </div>
           );
         })}

@@ -1,9 +1,9 @@
 const express = require("express");
 const noteModel = require("./models/notes.model.js");
-const cors = require('cors')
+const cors = require("cors");
 const app = express();
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 /**
  *  post /api/notes
  *  create new note and save data in mongodb
@@ -21,8 +21,6 @@ app.post("/api/notes", async (req, res) => {
   });
 });
 
-
-
 /**
  *  GET /api/notes
  *  Fetch all the notes data from nongodb and send them in the response
@@ -34,8 +32,6 @@ app.get("/api/notes", async (req, res) => {
     notes,
   });
 });
-
-
 
 /**
  *  Delete /api/notes/:id
@@ -49,9 +45,6 @@ app.delete("/api/notes/:id", async (req, res) => {
   });
 });
 
-
-
-
 /**
  * PATCH /api/notes/:id
  * Update notes
@@ -60,8 +53,11 @@ app.delete("/api/notes/:id", async (req, res) => {
 
 app.patch("/api/notes/:id", async (req, res) => {
   const id = req.params.id;
-  const { description } = req.body;
-  await noteModel.findByIdAndUpdate(id, { description });
+  const { title, description } = req.body;
+  await noteModel.findByIdAndUpdate(id, {
+    title,
+    description,
+  });
   res.status(200).json({
     message: "Note update successfully",
   });
