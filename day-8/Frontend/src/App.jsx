@@ -1,21 +1,74 @@
-import React from 'react'
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 function App() {
   const [notes, setNotes] = useState([
-    {titel : "titel 1" ,
-      description : 'description 1'
-    },
-    {titel : "titel 2" ,
-      description : 'description 2'
-    },
-    {titel : "titel 3" ,
-      description : 'description 3'
-    }
-  ])
+    
+  ]);
+
+  function fatchNotes() {
+    axios
+      .get("http://localhost:3000/api/notes")
+      .then((res) => {
+        setNotes(res.data.notes);
+      })
+      .catch((error) => console.log(error.message));
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const { title, description } = e.target.elements;
+
+    axios
+      .post("http://localhost:3000/api/notes", {
+        title: title.value,
+        description: description.value,
+      })
+      .then((res) => {
+        console.log(res.data);
+        fatchNotes();
+      });
+    e.target.elements.title.value = "";
+    e.target.elements.description.value = "";
+  }
+
+  function handleDeleteNote(noteId) {
+    axios.delete(`http://localhost:3000/api/notes/${noteId}`).then((res) => {
+      console.log(res.data);
+      fatchNotes();
+    });
+  }
+  
+  // function handleUpdateNote(noteId) {
+  //   // axios.patch(`http://localhost:3000/api/notes/${noteId}`,{
+  //   // })
+    
+  // }
+  useEffect(() => {
+    fatchNotes();
+  }, []);
+
   return (
     <>
+      <form className="note-create-form" onSubmit={handleSubmit}>
+        <input name="title" type="text" placeholder="Enter title" />
+        <input name="description" type="text" placeholder="Enter decription" />
+        <button>Submit</button>
+      </form>
+
+      <div className="notes">
+        {notes.map((note, idx) => {
+          return (
+            <div key={idx} className="note">
+              <h1>{note.title}</h1>
+              <p>{note.description}</p>
+              <button style={{backgroundColor:"red"}} onClick={() => handleDeleteNote(note._id)}>Delete</button>
+              {/* <button onClick={()=> handleUpdateNote(note._id)}>update</button> */}
+            </div>
+          );
+        })}
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

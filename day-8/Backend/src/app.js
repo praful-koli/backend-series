@@ -1,8 +1,9 @@
 const express = require("express");
-const app = express();
 const noteModel = require("./models/notes.model.js");
-
+const cors = require('cors')
+const app = express();
 app.use(express.json());
+app.use(cors())
 /**
  *  post /api/notes
  *  create new note and save data in mongodb
@@ -20,11 +21,12 @@ app.post("/api/notes", async (req, res) => {
   });
 });
 
+
+
 /**
  *  GET /api/notes
  *  Fetch all the notes data from nongodb and send them in the response
  */
-
 app.get("/api/notes", async (req, res) => {
   const notes = await noteModel.find(); // find return data in the array format
   res.status(200).json({
@@ -33,11 +35,12 @@ app.get("/api/notes", async (req, res) => {
   });
 });
 
+
+
 /**
  *  Delete /api/notes/:id
  *  Delete note with the id from req.params
  */
-
 app.delete("/api/notes/:id", async (req, res) => {
   const id = req.params.id;
   await noteModel.findByIdAndDelete(id);
@@ -45,6 +48,9 @@ app.delete("/api/notes/:id", async (req, res) => {
     messsage: "Note Deleted Successfuly",
   });
 });
+
+
+
 
 /**
  * PATCH /api/notes/:id
