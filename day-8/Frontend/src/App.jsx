@@ -29,7 +29,7 @@ function App() {
     }
     else {
        axios
-      .post(`${URL}}/api/notes`, {
+      .post(`${URL}/api/notes`, {
         title: note.title,
         description: note.description,
       })
