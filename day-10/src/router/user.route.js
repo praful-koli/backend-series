@@ -7,7 +7,7 @@ const crypto = require('crypto')
 
 
 
-authRoute.post('register' ,  async(req, res) => {
+authRoute.post('/register' ,  async(req, res) => {
     const {name , email , password} = req.body
 
     const isUserAlreadyExsits =  await userModel.findOne({email})
@@ -41,3 +41,6 @@ authRoute.post('register' ,  async(req, res) => {
      })
 
 })
+
+
+module.exports = authRoute
