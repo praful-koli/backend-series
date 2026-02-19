@@ -28,7 +28,5 @@ postRoute.get('/detail/:postId',identifyUser,controller.getPostDetailsController
 
 
 
-
-
 module.exports = postRoute
 
