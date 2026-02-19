@@ -6,7 +6,7 @@ const postModel = require("../models/post.model.js")
 const upload = multer({storage: multer.memoryStorage()})
 const identifyUser = require('../middlewares/auth.middleware.js')
 /**
- *  POST /api/posts
+ *  @route POST /api/posts
  *  req.body - caption image file , user
  * http://localhost:3000/api/post/
  */
@@ -16,18 +16,28 @@ postRoute.post('/', identifyUser ,upload.single('image'), controller.createPostC
 
 /**
  * GET
- *  /api/post/ ->protected
- * geting the specfics user post 
+ * @route /api/post/ ->protected
+ * @description geting the specfics user post 
  */
 
 postRoute.get('/',identifyUser,controller.getPostController)
  
 
-
+/**
+ * @route /api/post/detail/postId
+ * @description make a request for the spcifces post in details
+ */
 postRoute.get('/detail/:postId',identifyUser,controller.getPostDetailsController) 
 
 
 
+/**
+ * @route /api/post/like/:postId 
+ * @description make a feature the like a post 
+ * 
+ */
+
+postRoute.post('/like/:postId' , identifyUser , controller.likePostController)
 
 
 module.exports = postRoute
