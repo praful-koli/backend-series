@@ -21,4 +21,9 @@ userRoute.post("/follow/:username", identifyUser , userController.followUserCont
 userRoute.delete('/unfollow/:username' , identifyUser , userController.unfollowUserController)
 
 
+
+userRoute.get('/follower/request ', identifyUser, userController.getFollowRequestController)
+
+userRoute.patch('/follower/request/:username', identifyUser , userController.acceptFollowRequestController)
+
 module.exports = userRoute

@@ -25,7 +25,8 @@ async function followUserController(req, res) {
 
     const userIsAlreadyFollowing = await followModel.findOne({
         follower : userFollower,
-        followee : userFollowee
+        followee : userFollowee,
+        status : 'pending'
     })
    
     if(userIsAlreadyFollowing){
@@ -44,6 +45,47 @@ async function followUserController(req, res) {
      message : `${userFollower} is following to ${userFollowee}`,
      followRecord
    })
+}
+
+async function getFollowRequestController(req, res) {
+    
+   const followRequest = await followModel.find({
+      followee : req.user.username
+   })
+   if(!followRequest.length === 0) {
+      return res.status(200).json({
+         message : "No follower request you have !"
+      })
+   }
+   res.status(200).json({
+      message : "follow request" ,
+      followRequest
+   })
+}
+
+async function acceptFollowRequestController(req , res) {
+   
+    followerUsername = req.params.username
+    followeeUsername = req.user.username
+
+    const userFollowRequest= await followModel.findOne({
+        follower : followerUsername,
+        followee : followeeUsername
+    })
+    
+    if (!userFollowRequest) {
+      return res.status(404).json({ message: "Follow request not found" });
+    }
+
+
+    userFollowRequest.status = 'accepted'
+    await userFollowRequest.save()
+
+    res.status(200).json({
+        message : `${followerUsername} request to ${followeeUsername} is accepted`,
+        userFollowRequest
+    })
+
 }
 
 async function unfollowUserController(req , res) {
@@ -71,5 +113,7 @@ async function unfollowUserController(req , res) {
 
 module.exports = {
     followUserController,
-    unfollowUserController
+    unfollowUserController,
+    getFollowRequestController,
+    acceptFollowRequestController
 }
