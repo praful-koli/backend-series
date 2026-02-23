@@ -15,7 +15,10 @@ const userSchema = new mongoose.Schema( {
         type : String,
         require : [true , 'Password is required.']
     },
-    bio : String,
+    bio : {
+        type : String,
+        default : 'I Am Software Developer'
+    },
     profileImage : {
         type : String,
         default : "https://ik.imagekit.io/hnoglyswo0/avatar-gender-neutral-silhouette-vector-600nw-2470054311.webp",

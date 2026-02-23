@@ -1,12 +1,16 @@
 const express = require('express')
 const app = express()
 const cookieParse = require('cookie-parser')
-
+const cors = require('cors')
 
 
 /** Middelware */
 app.use(cookieParse()) 
 app.use(express.json())
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}))
 
 /** require route */
 const authRoute = require('./routes/auth.route.js')

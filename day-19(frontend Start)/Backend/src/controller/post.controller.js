@@ -13,10 +13,9 @@ async function  createPostController(req, res) {
 
   const file = await client.files.upload({
     file: await toFile(Buffer.from(req.file.buffer), "file"),
-    fileName: "Test",
+    fileName: "Test", 
     folder:"cohort-2-insta-clone-posts"
   });
-  
   
   
   const userId = req.user.id

@@ -34,6 +34,7 @@ async function registerController(req, res) {
         process.env.JWT_SECRET,{expiresIn:'1d'}
     )
     
+    
     res.cookie('token', token)
     const userRespone = {...user._doc , password:"_"}
     res.status(200).json({
