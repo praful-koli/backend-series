@@ -1,28 +1,13 @@
 import { Link } from "react-router";
-import axios from "axios";
+// import axios from "axios";
 import { useState } from "react";
 function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  async function handleFormSubmit(e) {
-    e.preventDefault();
-
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/api/auth/register",
-        {
-          username,
-          email,
-          password,
-        },
-        { withCredentials: true }
-      );
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
+  async function handleFormSubmit(e) { 
+    e.preventDefault();    
   }
   return (
     <main>

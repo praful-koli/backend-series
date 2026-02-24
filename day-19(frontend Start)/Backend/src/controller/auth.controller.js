@@ -59,8 +59,6 @@ async function loginController(req, res) {
     }
 
 
-   
-
     const passwordValid = await bcrypt.compare(password , user.password)
 
     if(!passwordValid) {
@@ -86,7 +84,18 @@ async function loginController(req, res) {
 }
 
 
+async function getUserInfoController(req,res) {
+    const userId = req.user.id
+    let userInfo = await userModel.find({_id :userId})
+    userInfo = {...userInfo[0]._doc, password:'-'}
+    res.status(200).json({
+        message : 'Fetch user Info successfully',
+        userInfo
+    })
+}
+
 module.exports = {
     registerController,
-    loginController
+    loginController,
+    getUserInfoController
 }
