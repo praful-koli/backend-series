@@ -1,0 +1,16 @@
+UI (Presentation)
+  ↓
+Hooks (Orchestration)
+  ↓
+State (Memory) -> (contexAPi) create  one place to store all data and provide any where using useContext or RKT Query
+  ↓
+API (Backend Communication)
+
+
+features/
+  auth/
+    pages/            # UI
+    components/       # UI
+    hooks/            # Orchestration (custome)
+    store/ or *.context.tsx   # State
+    services/         # API
