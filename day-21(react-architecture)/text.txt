@@ -1,0 +1,4 @@
+select:false -> in  the schma by  db never read they property
+
+when you read data you need that data has been select:false you can use the .select("+password") 
+

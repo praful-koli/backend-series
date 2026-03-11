@@ -3,6 +3,7 @@ import '../styles/form.scss';
 import { useAuth } from '../hooks/useAuth';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Loader from '../components/Loader';
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -13,9 +14,11 @@ function Login() {
   const navigate = useNavigate()
 
   if (loading) {
-    return (<main>
-        <h1>Loading ..... </h1>
-    </main>);
+    return (
+    <main>
+       <Loader />
+    </main>
+    );
   }
 
   const handleSubmit = async (e) => {
