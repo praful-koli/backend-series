@@ -1,7 +1,7 @@
 const postModel = require("../models/post.model.js");
 const ImageKit = require("@imagekit/nodejs");
 const { toFile } = require("@imagekit/nodejs");
-const jwt = require("jsonwebtoken");
+
 const likeModel = require("../models/likes.model.js");
 
 const client = new ImageKit({
@@ -99,13 +99,37 @@ async function likePostController(req, res) {
 }
 
 
-async function getFeedController(req , res) {
-  const posts = await postModel.find().populate('user') 
+async function getFeedController(req, res) {
+  try {
+    let user = req.user;
 
-  res.status(200).json({
-     message : "Fetch Feed succfully",
-     posts
-  })
+    console.log(user)
+    const posts = await postModel.find().populate('user').lean();
+
+  
+    const postsWithLikes = await Promise.all(
+      posts.map(async (post) => {
+        const isLike = await likeModel.findOne({
+           post: post._id,
+           username : user.username
+           
+        })
+
+        console.log('islike data ', isLike)
+        post.isLike = !!isLike;
+
+        return post;
+      })
+    );
+
+    // Step 3: Send response
+    res.status(200).json({
+      message: "Fetch Feed successfully",
+      posts: postsWithLikes
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching feed", error });
+  }
 }
 
 

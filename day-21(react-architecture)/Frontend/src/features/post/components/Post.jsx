@@ -3,6 +3,7 @@ import {  Bookmark,  Ellipsis,  Heart,  MessageSquareText,  Send,} from "lucide-
 
 
 function Post({user , post}) {
+  console.log(post)
   return (
     <main>
       <div className="post">
@@ -34,7 +35,7 @@ function Post({user , post}) {
         <div className="bottom">
           <div className="actions">
             <div className="left-actions">
-              <Heart className="actions-icon" color="#e5d6d6" />
+              {post.isLike ?  <Heart className="actions-icon " color="red" /> :  <Heart className="actions-icon " color="#e5d6d6" />}
               <MessageSquareText className="actions-icon" color="#e5d6d6" />
               <Send className="actions-icon" color="#e5d6d6" />
             </div>
