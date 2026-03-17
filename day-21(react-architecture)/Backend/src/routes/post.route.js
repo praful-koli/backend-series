@@ -12,7 +12,7 @@ const identifyUser = require('../middlewares/auth.middleware.js')
 
 postRoute.post('/', identifyUser ,upload.single('image'), controller.createPostController)
 
-
+ 
 /**
  * GET
  * @route /api/post/ ->protected

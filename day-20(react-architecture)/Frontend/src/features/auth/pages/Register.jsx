@@ -1,6 +1,6 @@
 import { Link } from "react-router";
-// import axios from "axios";
 import { useState } from "react";
+
 function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -14,7 +14,8 @@ function Register() {
       <div className="form-container">
         <h1>Register</h1>
         <form onSubmit={handleFormSubmit}>
-          <input
+         <input
+            required
             type="text"
             name="username"
             placeholder="Enter username"
@@ -24,6 +25,7 @@ function Register() {
             }}
           />
           <input
+            required
             type="text"
             name="email"
             placeholder="Enter email"
@@ -33,6 +35,7 @@ function Register() {
             }}
           />
           <input
+            required
             type="password"
             name="password"
             placeholder="Enter passwrod"

@@ -1,6 +1,7 @@
 const userModel = require('../models/user.model.js')
-const crypto = require('crypto')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
+
 async function registerController(req, res) {
     const {username , email , password , bio , profileImage} = req.body
 
@@ -19,7 +20,8 @@ async function registerController(req, res) {
             message : "User already exsits," + (isUserAlreadyExists.email == email ? "User with this email alread exists." : "Use with this username alread exsits.")
         })
     }
-    const hash = crypto.createHash('md5').update(password).digest('hex')
+    const hash = await bcrypt.hash(password,10)
+
     const user = await userModel.create({
         username, email, password : hash, bio , profileImage
     })
@@ -55,9 +57,9 @@ async function loginController(req, res) {
     }
 
 
-    const hash = crypto.createHash('md5').update(password).digest('hex')
+   
 
-    const passwordValid = user.password == hash
+    const passwordValid = await bcrypt.compare(password , user.password)
 
     if(!passwordValid) {
         return res.status(401).json({
@@ -72,7 +74,7 @@ async function loginController(req, res) {
     process.env.JWT_SECRET,{expiresIn:'1d'}
    )
    res.cookie('token', token)
-   
+    
    const userData = {...user._doc , password:"-"}
    res.status(200).json({
       message:'User login successfully.',

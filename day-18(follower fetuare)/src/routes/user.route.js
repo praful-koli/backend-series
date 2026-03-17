@@ -12,7 +12,6 @@ const identifyUser = require('../middlewares/auth.middleware.js')
 
 userRoute.post("/follow/:username", identifyUser , userController.followUserController)
 
-
 /**
  * @route POST /api/user/unfollow/:username
  * @description unfolloing the user
@@ -20,10 +19,17 @@ userRoute.post("/follow/:username", identifyUser , userController.followUserCont
 
 userRoute.delete('/unfollow/:username' , identifyUser , userController.unfollowUserController)
 
-
+/**
+ * @route /api/user/follower/request
+ * @description  who are loin user show the list of the follwer request
+ */
 
 userRoute.get('/follower/request ', identifyUser, userController.getFollowRequestController)
 
+/**
+ * @route /api/user/follower/request/:username 
+ * @description user the  can accept request of the follower of scepfic follower
+ */
 userRoute.patch('/follower/request/:username', identifyUser , userController.acceptFollowRequestController)
 
 module.exports = userRoute

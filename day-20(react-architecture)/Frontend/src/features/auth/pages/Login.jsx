@@ -10,15 +10,14 @@ function Login() {
   const [password, setPassword] = useState("");
  
  const  {user, loading , loginHandle} = useAuth()
- 
 
  if (loading) {
     return <h1>Loding</h1>
  }
   async function handleFormSubmit(e) {
      e.preventDefault()
-   const response = await loginHandle(username,password)
-    console.log(user)
+     await loginHandle(username,password)
+     console.log("user Data : " ,user)
     
   }
   
@@ -28,6 +27,7 @@ function Login() {
         <h1>Login</h1>
         <form onSubmit={handleFormSubmit}>
           <input
+            required
             type="text"
             name="username"
             placeholder="Enter yourname"
@@ -37,6 +37,7 @@ function Login() {
             }}
           />
           <input
+           required
             type="text"
             name="password"
             placeholder="Enter password"

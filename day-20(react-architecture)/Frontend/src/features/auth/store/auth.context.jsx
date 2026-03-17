@@ -1,8 +1,9 @@
-import { createContext, useState } from "react";
-import { login } from "./services/auth.api.js";
+import {  useState } from "react";
+import { login } from "../services/auth.api.js";
+import { AuthContext } from "./authContext.js";
 
 
-export const AuthContext = createContext();
+
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -11,7 +12,9 @@ export function AuthProvider({ children }) {
   const loginHandle = async (username, password) => {
     setLoading(true);
     try {
+      
       const response = await login(username, password);
+      
       setUser(response.userData);
       return response
     } catch (error) {
