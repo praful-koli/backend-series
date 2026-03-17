@@ -9,6 +9,7 @@
 html,
 body,
 #root {
+    user-select: none;
     width: 100%;
     background-color: rgb(19, 18, 18);
     color: whitesmoke;

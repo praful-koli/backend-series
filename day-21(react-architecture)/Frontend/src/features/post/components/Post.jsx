@@ -1,12 +1,8 @@
 import "../styles/feed.scss";
-import {
-  Bookmark,
-  Ellipsis,
-  Heart,
-  MessageSquareText,
-  Send,
-} from "lucide-react";
-function Post() {
+import {  Bookmark,  Ellipsis,  Heart,  MessageSquareText,  Send,} from "lucide-react";
+
+
+function Post({user , post}) {
   return (
     <main>
       <div className="post">
@@ -16,7 +12,7 @@ function Post() {
           <div className="user-info">
             <div className="userImg-wraper">
               <img
-                src="https://plus.unsplash.com/premium_photo-1709142525002-c1856b1c60c9?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                src={user.profileImage}
                 alt=""
               />
             </div>
@@ -30,7 +26,7 @@ function Post() {
 
         {/* content */}
         <img
-          src="https://plus.unsplash.com/premium_photo-1753983551384-31658f8307d0?q=80&w=686&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          src={post.imgUrl}
           alt=""
         />
 
@@ -52,8 +48,8 @@ function Post() {
           </div>
 
           <div className="caption">
-            <span>Praful</span>
-            <p>caption Lorem ipsum dolor sit amet consectetur.</p>
+            <span>{user.username}</span>
+            <p>{post.caption}</p>
           </div>
 
           <div className="timestamp">JUST NOW</div>
@@ -61,7 +57,7 @@ function Post() {
           <div className="add-comment">
             <div className="userImg-wraper">
               <img
-                src="https://plus.unsplash.com/premium_photo-1709142525002-c1856b1c60c9?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                src={user.profileImage}
                 alt=""
               />
             </div>
