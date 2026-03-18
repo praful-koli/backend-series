@@ -115,7 +115,7 @@ async function getFeedController(req, res) {
            
         })
 
-        console.log('islike data ', isLike)
+        
         post.isLike = !!isLike;
 
         return post;

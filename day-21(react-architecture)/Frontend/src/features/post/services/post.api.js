@@ -6,12 +6,22 @@ const api = axios.create({
 })
 
 
-export const getFeed = async () => {
-    try {
-        const response = await api.get('/feed');
-        return response.data
-    } catch (error) {
-        console.log(error)
-        
+
+
+export const getFeed = async (navigate) => {
+  try {
+    const response = await api.get('/feed');
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      console.log("Status:", error.response.status);
+
+      if (error.response.status === 401) {
+        // navigate to login page
+        navigate('/login');
+      }
+    } else {
+      console.log("Network or server error:", error.message);
     }
-}
+  }
+};

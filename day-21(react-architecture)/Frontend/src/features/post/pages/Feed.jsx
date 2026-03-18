@@ -3,12 +3,13 @@ import "../styles/feed.scss";
 import { usePost } from "../hooks/usePost";
 import Loader from "../../auth/components/Loader";
 import { useEffect } from "react";
-
+import { useNavigate } from 'react-router'; 
 export const Feed = () => {
+  const navigate = useNavigate()
   const { loading, feed, getFeedHandler } = usePost();
 
   useEffect(() => {
-    getFeedHandler();
+    getFeedHandler(navigate);
   }, []);
 
   if (loading || feed === null) {
@@ -18,6 +19,7 @@ export const Feed = () => {
       </main>
     );
   }
+
   return (
     <main className="feed-page">
       <div className="feed">
@@ -25,7 +27,7 @@ export const Feed = () => {
         <div className="posts">
           {/* single post layout */}
 
-          {feed.map((post) => {
+          {feed.toReversed().map((post) => {
             return <Post key={post._id} user={post.user} post={post} />;
           })}
         </div>

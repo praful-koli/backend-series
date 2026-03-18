@@ -7,10 +7,11 @@ export  function usePost() {
 
   const {loading,setLoading ,feed ,setFeed  ,post ,setPost} = context
 
- async function getFeedHandler() {
+ async function getFeedHandler(navigate) {
     try {
         setLoading(true)
-        const response = await getFeed()
+        const response = await getFeed(navigate)
+       
         setFeed(response.posts)
         // return response.posts;
     } catch (error) {
